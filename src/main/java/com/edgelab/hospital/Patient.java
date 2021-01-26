@@ -1,36 +1,29 @@
 package com.edgelab.hospital;
 
-import com.edgelab.hospital.drugs.Drug;
-import com.edgelab.hospital.states.Dead;
-import com.edgelab.hospital.states.Healthy;
-import com.edgelab.hospital.states.State;
-
 import java.util.List;
+import java.util.function.BiFunction;
 
 public class Patient {
 
     private State state;
 
-    private List<Drug> drugsIngested;
-
     private boolean treated = false;
 
-    public Patient(State state) {
-        this.state = state;
+    public Patient(State disease) {
+        this.state = disease;
     }
 
-    void treat(List<Drug> drugs) {
+    public State getState() {
+        return state;
+    }
+
+    void treat(List<Drug> drugs, BiFunction<List<Drug>, State, State> drugEffect) {
         if (this.treated) return;
-        if ((state.getClass().equals(Dead.class))) {
-
-            if (Math.random() < 0.000001){
-                this.state = new Healthy();
-            }
-
-            return;
+        State newState = drugEffect.apply(drugs, this.state);
+        if (!newState.equals(this.state)) {
+            this.state = newState;
+            this.treated = true;
         }
-        drugs.forEach(drug -> this.state = state.applyDrug(drug));
-        this.treated = true;
     }
 
 }
