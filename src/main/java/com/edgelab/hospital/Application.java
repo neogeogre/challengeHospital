@@ -1,30 +1,34 @@
 package com.edgelab.hospital;
 
-import com.edgelab.hospital.drugs.Drug;
-import com.edgelab.hospital.drugs.Pharmacy;
-import com.edgelab.hospital.states.States;
+import com.edgelab.hospital.entities.Drug;
+import com.edgelab.hospital.entities.Hospital;
+import com.edgelab.hospital.entities.Patient;
+import com.edgelab.hospital.entities.State;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Application {
 
-    public static void main(String[] main) {
+    public static void main(String[] args) {
+        if (args == null || args.length == 0) {
+            args = new String[]{""};
+        }
+        if (args.length == 1) {
+            args = new String[]{args[0], ""};
+        }
+        System.out.println(run(args[0], args[1]));
+    }
 
-        System.out.println("aaa");
+    private static String run(String statesString, String drugsString) {
+        List<Drug> drugs = Drug.parseDrugs(drugsString);
 
-        String patientStr = "F";
-        String drugStr = "P";
-
-        List<Drug> drugs = Pharmacy.pick(drugStr);
-        List<Patient> patients = States.pick(patientStr)
+        List<Patient> patients = State.parseStates(statesString)
                 .stream().map(Patient::new)
                 .collect(Collectors.toList());
 
-        HospitalSimulator hospital = new HospitalSimulator(patients);
-        hospital.simulate(drugs);
-        String patientsResults = hospital.getResults();
-
+        Hospital hospital = new Hospital(patients);
+        return hospital.runSimulation(drugs);
     }
 
 }
