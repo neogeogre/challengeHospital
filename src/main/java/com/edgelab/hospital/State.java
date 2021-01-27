@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * State contains the known states of a patient,
+ * just add an enum in the list if needed.
+ */
 public enum State {
 
     F("Fever"),
@@ -17,9 +21,15 @@ public enum State {
     }
 
     public static List<State> parse(String input) {
-        List<String> parts = Arrays.asList(input.split(","));
+        var parts = Arrays.asList(input.split(","));
         return parts.stream()
-                .map(str -> {try {return State.valueOf(str);} catch(RuntimeException e) {return null;}})
+                .map(str -> {
+                    try {
+                        return State.valueOf(str);
+                    } catch (Exception e) {
+                        return null;
+                    }
+                })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }

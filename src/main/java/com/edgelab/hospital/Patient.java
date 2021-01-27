@@ -19,7 +19,7 @@ public class Patient {
 
     void treat(List<Drug> drugs, BiFunction<List<Drug>, State, State> drugEffect) {
         if (this.treated) return;
-        State newState = drugEffect.apply(drugs, this.state);
+        var newState = drugEffect.apply(drugs, this.state);
         if (!newState.equals(this.state)) {
             this.state = newState;
             this.treated = true;
