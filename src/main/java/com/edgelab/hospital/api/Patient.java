@@ -1,4 +1,4 @@
-package com.edgelab.hospital;
+package com.edgelab.hospital.api;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -17,7 +17,7 @@ public class Patient {
         return state;
     }
 
-    void treat(List<Drug> drugs, BiFunction<List<Drug>, State, State> drugEffect) {
+    public void treat(List<Drug> drugs, BiFunction<List<Drug>, State, State> drugEffect) {
         if (this.treated) return;
         var newState = drugEffect.apply(drugs, this.state);
         if (!newState.equals(this.state)) {

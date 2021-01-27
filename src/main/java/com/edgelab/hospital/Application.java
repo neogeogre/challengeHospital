@@ -1,5 +1,10 @@
 package com.edgelab.hospital;
 
+import com.edgelab.hospital.api.Drug;
+import com.edgelab.hospital.api.Hospital;
+import com.edgelab.hospital.api.Patient;
+import com.edgelab.hospital.api.State;
+
 import java.util.List;
 import java.util.stream.Collectors;
 

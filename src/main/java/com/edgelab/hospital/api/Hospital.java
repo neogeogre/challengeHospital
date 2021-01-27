@@ -1,4 +1,4 @@
-package com.edgelab.hospital;
+package com.edgelab.hospital.api;
 
 import java.util.List;
 import java.util.Random;
@@ -43,7 +43,7 @@ public class Hospital {
         return state;
     };
 
-    Hospital(List<Patient> patients) {
+    public Hospital(List<Patient> patients) {
         this.patients = patients;
     }
 
