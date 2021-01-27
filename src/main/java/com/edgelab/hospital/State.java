@@ -2,8 +2,9 @@ package com.edgelab.hospital;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * State contains the known states of a patient,
@@ -11,27 +12,30 @@ import java.util.stream.Collectors;
  */
 public enum State {
 
-    F("Fever"),
-    H("Healthy"),
-    D("Diabetes"),
-    T("Tuberculosis"),
-    X("Dead");
+    FEVER("F"),
+    HEALTHY("H"),
+    DIABETES("D"),
+    TUBERCULOSIS("T"),
+    DEAD("X");
 
-    State(String name) {
+    public final String statusCode;
+
+    State(String statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public static List<State> parse(String input) {
-        var parts = Arrays.asList(input.split(","));
-        return parts.stream()
-                .map(str -> {
-                    try {
-                        return State.valueOf(str);
-                    } catch (Exception e) {
-                        return null;
-                    }
-                })
-                .filter(Objects::nonNull)
+    public static List<State> parseStates(String input) {
+        return  Arrays.stream(input.split(","))
+                .map(State::parseState)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toList());
+    }
+
+    private static Optional<State> parseState(String stateString) {
+        return Stream.of(State.values())
+                .filter(state -> state.statusCode.equals(stateString))
+                .findFirst();
     }
 
 }

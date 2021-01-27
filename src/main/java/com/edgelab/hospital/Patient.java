@@ -5,9 +5,9 @@ import java.util.function.BiFunction;
 
 public class Patient {
 
-    private State state;
+    private volatile State state;
 
-    private boolean treated = false;
+    private volatile boolean treated = false;
 
     public Patient(State disease) {
         this.state = disease;

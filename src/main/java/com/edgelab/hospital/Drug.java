@@ -2,8 +2,9 @@ package com.edgelab.hospital;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Drug contains the known drugs,
@@ -11,26 +12,29 @@ import java.util.stream.Collectors;
  */
 public enum Drug {
 
-    As("Aspirin"),
-    An("Antibiotic"),
-    I("Insulin"),
-    P("Paracetamol");
+    ASPIRIN("As"),
+    ANTIBIOTIC("An"),
+    INSULIN("I"),
+    PARACETAMOL("P");
 
-    Drug(String name) {
+    public final String drugCode;
+
+    Drug(String drugsCodeStr) {
+        this.drugCode = drugsCodeStr;
     }
 
-    public static List<Drug> parse(String input) {
-        var parts = Arrays.asList(input.split(","));
-        return parts.stream()
-                .map(str -> {
-                    try {
-                        return Drug.valueOf(str);
-                    } catch (Exception e) {
-                        return null;
-                    }
-                })
-                .filter(Objects::nonNull)
+    public static List<Drug> parseDrugs(String input) {
+        return Arrays.stream(input.split(","))
+                .map(Drug::parseDrug)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toList());
+    }
+
+    private static Optional<Drug> parseDrug(String drugString) {
+        return Stream.of(Drug.values())
+                .filter(drug -> drug.drugCode.equals(drugString))
+                .findFirst();
     }
 
 }

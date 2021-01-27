@@ -1,28 +1,29 @@
 package com.edgelab.hospital;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Application {
 
     public static void main(String[] main) {
-        var stateStr = main[0];
-        var drugStr = "";
+        String stateStr = main[0];
+        String drugStr = "";
         if (main.length > 1) {
             drugStr = main[1];
         }
-        String result = getResult(stateStr, drugStr);
-        System.out.println(result);
+        String results = run(stateStr, drugStr);
+        System.out.println(results);
     }
 
-    public static String getResult(String stateStr, String drugStr) {
-        var drugs = Drug.parse(drugStr);
-        var patients = State.parse(stateStr)
+    public static String run(String statesString, String drugsString) {
+        List<Drug> drugs = Drug.parseDrugs(drugsString);
+
+        List<Patient> patients = State.parseStates(statesString)
                 .stream().map(Patient::new)
                 .collect(Collectors.toList());
 
-        var hospital = new HospitalSimulator(patients);
-        hospital.simulate(drugs);
-        return hospital.getResults();
+        HospitalSimulator hospital = new HospitalSimulator(patients);
+        return hospital.runSimulation(drugs);
     }
 
 }
