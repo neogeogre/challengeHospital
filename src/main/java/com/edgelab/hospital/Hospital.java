@@ -6,9 +6,10 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class HospitalSimulator {
+public class Hospital {
 
     public final List<Patient> patients;
+    public static Random RANDOM = new Random();
 
     /**
      * A BiFunction for the conditions that will cause death to a patient
@@ -35,14 +36,14 @@ public class HospitalSimulator {
         if (drug.contains(Drug.PARACETAMOL) && state.equals(State.FEVER)) return State.HEALTHY;
         if (drug.contains(Drug.ANTIBIOTIC) && state.equals(State.TUBERCULOSIS)) return State.HEALTHY;
         if (state.equals(State.DEAD)) {
-            if (new Random().nextDouble() <= 0.000001) {
+            if (RANDOM.nextDouble() <= 0.000001) {
                 return State.HEALTHY;
             }
         }
         return state;
     };
 
-    HospitalSimulator(List<Patient> patients) {
+    Hospital(List<Patient> patients) {
         this.patients = patients;
     }
 

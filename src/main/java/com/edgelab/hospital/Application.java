@@ -22,7 +22,7 @@ public class Application {
                 .stream().map(Patient::new)
                 .collect(Collectors.toList());
 
-        HospitalSimulator hospital = new HospitalSimulator(patients);
+        Hospital hospital = new Hospital(patients);
         return hospital.runSimulation(drugs);
     }
 
