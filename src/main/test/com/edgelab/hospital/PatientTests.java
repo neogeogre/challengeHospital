@@ -6,36 +6,16 @@ import com.edgelab.hospital.api.Patient;
 import com.edgelab.hospital.api.State;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.when;
 
-class HospitalTests {
-
-    @Test
-    void parseStatusCode() {
-        assertEquals(State.FEVER, State.parseStates("F").get(0));
-        assertEquals(State.HEALTHY, State.parseStates("H").get(0));
-        assertEquals(State.DIABETES, State.parseStates("D").get(0));
-        assertEquals(State.TUBERCULOSIS, State.parseStates("T").get(0));
-        assertEquals(State.DEAD, State.parseStates("X").get(0));
-        assertEquals(Arrays.asList(State.FEVER, State.HEALTHY, State.DIABETES, State.TUBERCULOSIS, State.DEAD), State.parseStates("F,H,D,T,X"));
-        assertNotEquals(Arrays.asList(State.FEVER, State.HEALTHY, State.DIABETES, State.TUBERCULOSIS, State.DEAD), State.parseStates("H,F,D,T,X"));
-    }
-
-    @Test
-    void parseDrugsCode() {
-        assertEquals(Drug.ASPIRIN, Drug.parseDrugs("As").get(0));
-        assertEquals(Drug.ANTIBIOTIC, Drug.parseDrugs("An").get(0));
-        assertEquals(Drug.INSULIN, Drug.parseDrugs("I").get(0));
-        assertEquals(Drug.PARACETAMOL, Drug.parseDrugs("P").get(0));
-        assertEquals(Arrays.asList(Drug.ASPIRIN, Drug.ANTIBIOTIC, Drug.INSULIN, Drug.PARACETAMOL), Drug.parseDrugs("As,An,I,P"));
-        assertNotEquals(Arrays.asList(Drug.ASPIRIN, Drug.ANTIBIOTIC, Drug.INSULIN, Drug.PARACETAMOL), Drug.parseDrugs("An,As,I,P"));
-    }
+class PatientTests {
 
     @Test
     void medicineNoEffect() {
@@ -135,10 +115,15 @@ class HospitalTests {
     }
 
     @Test
-    void integrationTests() {
-        assertEquals("F:0,H:0,D:0,T:0,X:2", Application.run("D,D", ""));
-        assertEquals("F:0,H:1,D:0,T:0,X:0", Application.run("F", "P"));
-        assertEquals("F:0,H:3,D:0,T:0,X:1", Application.run("F,D,T,T", "P,An"));
+    void multiSimulations() {
+        List<Patient> patients = Arrays.asList(new Patient(State.FEVER), new Patient(State.DIABETES), new Patient(State.TUBERCULOSIS));
+        Hospital hospital = new Hospital(patients);
+
+        String results1 = hospital.runSimulation(Arrays.asList(Drug.PARACETAMOL, Drug.INSULIN));
+        assertEquals("F:0,H:1,D:1,T:1,X:0", results1);
+
+        String results2 = hospital.runSimulation(Arrays.asList(Drug.ANTIBIOTIC, Drug.ASPIRIN));
+        assertEquals("F:0,H:2,D:0,T:0,X:1", results2);
     }
 
 }
