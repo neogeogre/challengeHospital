@@ -8,7 +8,8 @@ import java.util.stream.Stream;
 
 public class Hospital {
 
-    public final List<Patient> patients;
+    private final List<Patient> patients;
+
     public static Random RANDOM = new Random();
 
     /**
@@ -24,7 +25,8 @@ public class Hospital {
      * A BiFunction for the conditions that will cause side effects to a patient
      */
     public static final BiFunction<List<Drug>, State, State> SIDE_EFFECT = (drug, state) -> {
-        if (drug.contains(Drug.INSULIN) && drug.contains(Drug.ANTIBIOTIC) && state.equals(State.HEALTHY)) return State.FEVER;
+        if (drug.contains(Drug.INSULIN) && drug.contains(Drug.ANTIBIOTIC) && state.equals(State.HEALTHY))
+            return State.FEVER;
         return state;
     };
 
@@ -47,9 +49,13 @@ public class Hospital {
         this.patients = patients;
     }
 
+    public List<Patient> getPatients() {
+        return this.patients;
+    }
+
     /**
-     * the simulation respects the processing rules order. It is easy to integrate new rules
-     * or modify the existing ones.
+     * The simulation respects the processing rules order.
+     * It is easy to integrate new rules or modify the existing ones.
      *
      * @param drugs the list of drugs to inoculate to the patients of the hospital.
      */
@@ -58,19 +64,19 @@ public class Hospital {
                 .peek(patient -> patient.treat(drugs, DEATH_EFFECT))
                 .peek(patient -> patient.treat(drugs, SIDE_EFFECT))
                 .forEach(patient -> patient.treat(drugs, CURE));
-        return getResults();
+        return generateReport();
     }
 
-    /**
-     * Generate the String of the resulting report for the Hospital
-     */
-    private String getResults() {
-        return Stream.of(State.values()).map(state -> {
-            long amount = this.patients.stream()
-                    .filter(patient -> patient.getState().equals(state))
-                    .count();
-            return state.statusCode + ":" + amount;
-        }).collect(Collectors.joining(","));
+    private String generateReport() {
+        return Stream.of(State.values())
+                .map(this::amountOfPatientsPerState)
+                .collect(Collectors.joining(","));
+    }
+
+    private String amountOfPatientsPerState(State state) {
+        return state.statusCode + ":" + this.patients.stream()
+                .filter(patient -> patient.getState().equals(state))
+                .count();
     }
 
 }

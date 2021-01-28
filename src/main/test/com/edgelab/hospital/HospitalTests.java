@@ -23,7 +23,6 @@ class HospitalTests {
         assertEquals(State.DIABETES, State.parseStates("D").get(0));
         assertEquals(State.TUBERCULOSIS, State.parseStates("T").get(0));
         assertEquals(State.DEAD, State.parseStates("X").get(0));
-
         assertEquals(Arrays.asList(State.FEVER, State.HEALTHY, State.DIABETES, State.TUBERCULOSIS, State.DEAD), State.parseStates("F,H,D,T,X"));
         assertNotEquals(Arrays.asList(State.FEVER, State.HEALTHY, State.DIABETES, State.TUBERCULOSIS, State.DEAD), State.parseStates("H,F,D,T,X"));
     }
@@ -34,7 +33,6 @@ class HospitalTests {
         assertEquals(Drug.ANTIBIOTIC, Drug.parseDrugs("An").get(0));
         assertEquals(Drug.INSULIN, Drug.parseDrugs("I").get(0));
         assertEquals(Drug.PARACETAMOL, Drug.parseDrugs("P").get(0));
-
         assertEquals(Arrays.asList(Drug.ASPIRIN, Drug.ANTIBIOTIC, Drug.INSULIN, Drug.PARACETAMOL), Drug.parseDrugs("As,An,I,P"));
         assertNotEquals(Arrays.asList(Drug.ASPIRIN, Drug.ANTIBIOTIC, Drug.INSULIN, Drug.PARACETAMOL), Drug.parseDrugs("An,As,I,P"));
     }
@@ -75,9 +73,9 @@ class HospitalTests {
     }
 
     @Test
-    void cureDeath() {
+    void cureDeathRandomly() {
         Random randomMock = Mockito.mock(Random.class);
-        when(randomMock.nextDouble()).thenReturn(0.0000011).thenReturn(0.0000009);
+        when(randomMock.nextDouble()).thenReturn(0.0000011).thenReturn(0.0000010);
         Hospital.RANDOM = randomMock;
         Patient patient = new Patient(State.DEAD);
         patient.treat(Collections.singletonList(Drug.ANTIBIOTIC), Hospital.CURE);
@@ -94,21 +92,21 @@ class HospitalTests {
     }
 
     @Test
-    void mixInsulinAntibiotic() {
+    void mixInsulinWithAntibiotic() {
         Patient patient = new Patient(State.HEALTHY);
         patient.treat(Arrays.asList(Drug.INSULIN, Drug.ANTIBIOTIC), Hospital.SIDE_EFFECT);
         assertEquals(State.FEVER, patient.getState());
     }
 
     @Test
-    void mixParacetamolAspirin() {
+    void mixParacetamolWithAspirin() {
         Patient patient2 = new Patient(State.HEALTHY);
         patient2.treat(Arrays.asList(Drug.PARACETAMOL, Drug.ASPIRIN), Hospital.DEATH_EFFECT);
         assertEquals(State.DEAD, patient2.getState());
     }
 
     @Test
-    void stateChangeOnce() {
+    void stateChangesOnce() {
         Patient patient = new Patient(State.HEALTHY);
         patient.treat(Arrays.asList(Drug.INSULIN, Drug.ANTIBIOTIC), Hospital.SIDE_EFFECT);
         assertEquals(State.FEVER, patient.getState());
@@ -117,10 +115,10 @@ class HospitalTests {
     }
 
     @Test
-    void DeathTakePrecedence() {
+    void DeathTakesPrecedence() {
         Hospital hospital = new Hospital(Collections.singletonList(new Patient(State.FEVER)));
         hospital.runSimulation(Arrays.asList(Drug.PARACETAMOL, Drug.ASPIRIN));
-        assertEquals(State.DEAD, hospital.patients.get(0).getState());
+        assertEquals(State.DEAD, hospital.getPatients().get(0).getState());
     }
 
     @Test
