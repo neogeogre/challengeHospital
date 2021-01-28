@@ -19,8 +19,8 @@ public enum Drug {
 
     public final String drugCode;
 
-    Drug(String drugsCodeStr) {
-        this.drugCode = drugsCodeStr;
+    Drug(String drugCode) {
+        this.drugCode = drugCode;
     }
 
     public static List<Drug> parseDrugs(String input) {

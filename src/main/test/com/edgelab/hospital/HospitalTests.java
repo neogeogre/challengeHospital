@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class HospitalTests {
 
     @Test
-    void parseStates() {
+    void parseStatusCode() {
         assertEquals(State.FEVER, State.parseStates("F").get(0));
         assertEquals(State.HEALTHY, State.parseStates("H").get(0));
         assertEquals(State.DIABETES, State.parseStates("D").get(0));
@@ -28,7 +28,7 @@ class HospitalTests {
     }
 
     @Test
-    void parseDrugs() {
+    void parseDrugsCode() {
         assertEquals(Drug.ASPIRIN, Drug.parseDrugs("As").get(0));
         assertEquals(Drug.ANTIBIOTIC, Drug.parseDrugs("An").get(0));
         assertEquals(Drug.INSULIN, Drug.parseDrugs("I").get(0));
