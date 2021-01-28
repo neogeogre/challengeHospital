@@ -106,11 +106,9 @@ class HospitalTests {
     }
 
     @Test
-    void stateChangesOnce() {
+    void stateChangesOnlyOnce() {
         Patient patient = new Patient(State.HEALTHY);
-        patient.treat(Arrays.asList(Drug.INSULIN, Drug.ANTIBIOTIC));
-        assertEquals(State.FEVER, patient.getState());
-        patient.treat(Collections.singletonList(Drug.ASPIRIN));
+        patient.treat(Arrays.asList(Drug.INSULIN, Drug.ANTIBIOTIC, Drug.ASPIRIN));
         assertEquals(State.FEVER, patient.getState());
     }
 

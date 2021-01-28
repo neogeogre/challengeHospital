@@ -4,16 +4,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * An patient of the {@link com.edgelab.hospital.api.Hospital} host a list of {@link com.edgelab.hospital.api.Patient}
+ * We can run a simulation on the patients using a list of {@link com.edgelab.hospital.api.Drug}.
+ * A report will be generated.
+ */
 public class Hospital {
 
     private final List<Patient> patients;
 
     public Hospital(List<Patient> patients) {
         this.patients = patients;
-    }
-
-    public List<Patient> getPatients() {
-        return this.patients;
     }
 
     /**

@@ -17,26 +17,18 @@ public class Patient {
 
     public static Random RANDOM = new Random();
 
-    /**
-     * A BiFunction for the conditions that will cause death to a patient
-     */
     private final BiFunction<List<Drug>, State, State> deathEffect = (drugs, state) -> {
         if (drugs.contains(Drug.PARACETAMOL) && drugs.contains(Drug.ASPIRIN)) return State.DEAD;
         if (!drugs.contains(Drug.INSULIN) && state.equals(State.DIABETES)) return State.DEAD;
         return state;
     };
 
-    /**
-     * A BiFunction for the conditions that will cause side effects to a patient
-     */
     private final BiFunction<List<Drug>, State, State> sideEffect = (drugs, state) -> {
-        if (drugs.contains(Drug.INSULIN) && drugs.contains(Drug.ANTIBIOTIC) && state.equals(State.HEALTHY)) return State.FEVER;
+        if (drugs.contains(Drug.INSULIN) && drugs.contains(Drug.ANTIBIOTIC) && state.equals(State.HEALTHY))
+            return State.FEVER;
         return state;
     };
 
-    /**
-     * A BiFunction for the conditions to cure a patient
-     */
     private final BiFunction<List<Drug>, State, State> cureEffect = (drugs, state) -> {
         if (drugs.contains(Drug.ASPIRIN) && state.equals(State.FEVER)) return State.HEALTHY;
         if (drugs.contains(Drug.PARACETAMOL) && state.equals(State.FEVER)) return State.HEALTHY;
@@ -49,28 +41,38 @@ public class Patient {
         return state;
     };
 
-    public Patient(State disease) {
-        this.state = disease;
+    public Patient(State state) {
+        this.state = state;
     }
 
+    /**
+     * Accessor to the {@link com.edgelab.hospital.api.State} of the patient
+     *
+     * @return a {@link com.edgelab.hospital.api.State}
+     */
     public State getState() {
         return state;
     }
 
+    /**
+     * Will ingest a list of {@link com.edgelab.hospital.api.Drug} to the patient.
+     *
+     * @param drugs a list of {@link com.edgelab.hospital.api.Drug}
+     */
     public void treat(List<Drug> drugs) {
-        if (!this.isTreated.get()) {
-            List.of(this.deathEffect, this.sideEffect, this.cureEffect) // the order is important here
-                    .stream()
-                    .map(effect -> effect.apply(drugs, this.state))
-                    .forEach(this::checkStateChange);
-        }
+        List.of(this.deathEffect, this.sideEffect, this.cureEffect) // the order is important here
+                .stream()
+                .filter(effect -> !this.isTreated.get())
+                .map(effect -> effect.apply(drugs, this.state))
+                .filter(newState -> !newState.equals(this.state))
+                .findFirst()
+                .ifPresent(this::changePatientState);
+        this.isTreated.set(false);
     }
 
-    private void checkStateChange(State newState) {
-        if (!newState.equals(this.state)) {
-            this.state = newState;
-            this.isTreated.set(true);
-        }
+    private void changePatientState(State newState) {
+        this.state = newState;
+        this.isTreated.set(true);
     }
 
 }
