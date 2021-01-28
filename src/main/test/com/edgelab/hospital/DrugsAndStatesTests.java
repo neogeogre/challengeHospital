@@ -4,12 +4,18 @@ import com.edgelab.hospital.entities.Drug;
 import com.edgelab.hospital.entities.State;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class DrugsAndStatesTests {
+
+    @Test
+    void emptyState() {
+        assertEquals(new ArrayList<>(), State.parseStates(""));
+    }
 
     @Test
     void parseFever() {
@@ -35,6 +41,11 @@ public class DrugsAndStatesTests {
     void parseMultipleStates() {
         assertEquals(Arrays.asList(State.FEVER, State.HEALTHY, State.DIABETES, State.TUBERCULOSIS, State.DEAD), State.parseStates("F,H,D,T,X"));
         assertNotEquals(Arrays.asList(State.FEVER, State.HEALTHY, State.DIABETES, State.TUBERCULOSIS, State.DEAD), State.parseStates("H,F,D,T,X"));
+    }
+
+    @Test
+    void emptyDrug() {
+        assertEquals(new ArrayList<>(), Drug.parseDrugs(""));
     }
 
     @Test

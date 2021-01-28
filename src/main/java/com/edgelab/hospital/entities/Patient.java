@@ -11,7 +11,7 @@ import java.util.function.BiFunction;
 
 /**
  * A patient of the {@link com.edgelab.hospital.entities.Hospital}
- * Can be treated only once
+ * Can be treated only once per simulation
  */
 @EqualsAndHashCode
 @ToString
