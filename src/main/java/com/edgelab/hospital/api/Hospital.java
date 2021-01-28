@@ -1,5 +1,8 @@
 package com.edgelab.hospital.api;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -9,6 +12,8 @@ import java.util.stream.Stream;
  * We can run a simulation on the patients using a list of {@link com.edgelab.hospital.api.Drug}.
  * A report will be generated.
  */
+@EqualsAndHashCode
+@ToString
 public class Hospital {
 
     private final List<Patient> patients;

@@ -1,5 +1,9 @@
 package com.edgelab.hospital.api;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -9,6 +13,9 @@ import java.util.function.BiFunction;
  * A patient of the {@link com.edgelab.hospital.api.Hospital}
  * Can be treated only once
  */
+@EqualsAndHashCode
+@ToString
+@Getter
 public class Patient {
 
     private volatile State state;
@@ -43,15 +50,6 @@ public class Patient {
 
     public Patient(State state) {
         this.state = state;
-    }
-
-    /**
-     * Accessor to the {@link com.edgelab.hospital.api.State} of the patient
-     *
-     * @return a {@link com.edgelab.hospital.api.State}
-     */
-    public State getState() {
-        return state;
     }
 
     /**
