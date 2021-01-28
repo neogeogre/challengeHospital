@@ -77,7 +77,7 @@ class HospitalTests {
     @Test
     void cureDeath() {
         Random randomMock = Mockito.mock(Random.class);
-        when(randomMock.nextDouble()).thenReturn(0.000002).thenReturn(0.0000009);
+        when(randomMock.nextDouble()).thenReturn(0.0000011).thenReturn(0.0000009);
         Hospital.RANDOM = randomMock;
         Patient patient = new Patient(State.DEAD);
         patient.treat(Collections.singletonList(Drug.ANTIBIOTIC), Hospital.CURE);
