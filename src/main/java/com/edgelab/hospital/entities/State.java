@@ -1,4 +1,4 @@
-package com.edgelab.hospital.api;
+package com.edgelab.hospital.entities;
 
 import java.util.Arrays;
 import java.util.List;

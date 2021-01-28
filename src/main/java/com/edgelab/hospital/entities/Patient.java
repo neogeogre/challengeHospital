@@ -1,4 +1,4 @@
-package com.edgelab.hospital.api;
+package com.edgelab.hospital.entities;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 
 /**
- * A patient of the {@link com.edgelab.hospital.api.Hospital}
+ * A patient of the {@link com.edgelab.hospital.entities.Hospital}
  * Can be treated only once
  */
 @EqualsAndHashCode
@@ -53,9 +53,9 @@ public class Patient {
     }
 
     /**
-     * Will ingest a list of {@link com.edgelab.hospital.api.Drug} to the patient.
+     * Will ingest a list of {@link com.edgelab.hospital.entities.Drug} to the patient.
      *
-     * @param drugs a list of {@link com.edgelab.hospital.api.Drug}
+     * @param drugs a list of {@link com.edgelab.hospital.entities.Drug}
      */
     public void treat(List<Drug> drugs) {
         List.of(this.deathEffect, this.sideEffect, this.cureEffect) // the order is important here

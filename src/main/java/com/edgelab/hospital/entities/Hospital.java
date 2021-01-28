@@ -1,4 +1,4 @@
-package com.edgelab.hospital.api;
+package com.edgelab.hospital.entities;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * An patient of the {@link com.edgelab.hospital.api.Hospital} host a list of {@link com.edgelab.hospital.api.Patient}
- * We can run a simulation on the patients using a list of {@link com.edgelab.hospital.api.Drug}.
+ * An patient of the {@link com.edgelab.hospital.entities.Hospital} host a list of {@link com.edgelab.hospital.entities.Patient}
+ * We can run a simulation on the patients using a list of {@link com.edgelab.hospital.entities.Drug}.
  * A report will be generated.
  */
 @EqualsAndHashCode

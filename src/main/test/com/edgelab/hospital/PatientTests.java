@@ -1,9 +1,9 @@
 package com.edgelab.hospital;
 
-import com.edgelab.hospital.api.Drug;
-import com.edgelab.hospital.api.Hospital;
-import com.edgelab.hospital.api.Patient;
-import com.edgelab.hospital.api.State;
+import com.edgelab.hospital.entities.Drug;
+import com.edgelab.hospital.entities.Hospital;
+import com.edgelab.hospital.entities.Patient;
+import com.edgelab.hospital.entities.State;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
