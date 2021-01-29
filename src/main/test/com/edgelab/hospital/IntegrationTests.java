@@ -1,6 +1,5 @@
 package com.edgelab.hospital;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,22 +10,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class IntegrationTests {
 
-    private static PrintStream OLD_OUT;
-
     private static ByteArrayOutputStream BAOS;
 
     @BeforeEach
-    void redirectPrintStream() {
+    void redirectPrintOutStream() {
         BAOS = new ByteArrayOutputStream();
         PrintStream redirectOut = new PrintStream(BAOS);
-        OLD_OUT = System.out;
         System.setOut(redirectOut);
-    }
-
-    @AfterEach
-    void setPrintStreamBack() {
-        System.out.flush();
-        System.setOut(OLD_OUT);
     }
 
     @Test
