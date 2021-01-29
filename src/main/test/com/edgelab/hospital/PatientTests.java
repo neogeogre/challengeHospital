@@ -1,7 +1,6 @@
 package com.edgelab.hospital;
 
 import com.edgelab.hospital.entities.Drug;
-import com.edgelab.hospital.entities.Hospital;
 import com.edgelab.hospital.entities.Patient;
 import com.edgelab.hospital.entities.State;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,6 @@ import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -98,6 +96,5 @@ class PatientTests {
         patient.treat(Arrays.asList(Drug.PARACETAMOL, Drug.ASPIRIN));
         assertEquals(State.DEAD, patient.getState());
     }
-
 
 }
