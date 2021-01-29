@@ -20,7 +20,7 @@ public class Application {
         System.out.println(results);
     }
 
-    public static String run(String statesString, String drugsString) {
+    private static String run(String statesString, String drugsString) {
         List<Drug> drugs = Drug.parseDrugs(drugsString);
 
         List<Patient> patients = State.parseStates(statesString)
