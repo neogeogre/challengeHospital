@@ -20,6 +20,24 @@ public class IntegrationTests {
     }
 
     @Test
+    void nullArguments() {
+        Application.main(null);
+        assertEquals("F:0,H:0,D:0,T:0,X:0", BAOS.toString().replaceAll("([\\r\\n])", ""));
+    }
+
+    @Test
+    void noArguments() {
+        Application.main(new String[]{});
+        assertEquals("F:0,H:0,D:0,T:0,X:0", BAOS.toString().replaceAll("([\\r\\n])", ""));
+    }
+
+    @Test
+    void noneSense() {
+        Application.main(new String[]{"foo", "bar"});
+        assertEquals("F:0,H:0,D:0,T:0,X:0", BAOS.toString().replaceAll("([\\r\\n])", ""));
+    }
+
+    @Test
     void noPatientsNoDrugs() {
         Application.main(new String[]{"", ""});
         assertEquals("F:0,H:0,D:0,T:0,X:0", BAOS.toString().replaceAll("([\\r\\n])", ""));

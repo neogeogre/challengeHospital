@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 
 public class Application {
 
-    public static void main(String[] main) {
-        String stateStr = main[0];
-        String drugStr = "";
-        if (main.length > 1) {
-            drugStr = main[1];
+    public static void main(String[] args) {
+        if (args == null || args.length == 0) {
+            args = new String[]{""};
         }
-        String results = run(stateStr, drugStr);
-        System.out.println(results);
+        if (args.length == 1) {
+            args = new String[]{args[0], ""};
+        }
+        System.out.println(run(args[0], args[1]));
     }
 
     private static String run(String statesString, String drugsString) {
