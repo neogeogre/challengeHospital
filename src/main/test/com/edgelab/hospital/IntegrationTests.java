@@ -50,6 +50,12 @@ public class IntegrationTests {
     }
 
     @Test
+    void onePatient() {
+        Application.main(new String[]{"D"});
+        assertEquals("F:0,H:0,D:0,T:0,X:1", BAOS.toString().replaceAll("([\\r\\n])", ""));
+    }
+
+    @Test
     void onePatientNoDrug() {
         Application.main(new String[]{"F", ""});
         assertEquals("F:1,H:0,D:0,T:0,X:0", BAOS.toString().replaceAll("([\\r\\n])", ""));
