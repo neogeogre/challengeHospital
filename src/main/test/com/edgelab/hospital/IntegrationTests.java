@@ -15,31 +15,30 @@ public class IntegrationTests {
     @BeforeEach
     void redirectPrintOutStream() {
         BAOS = new ByteArrayOutputStream();
-        PrintStream redirectOut = new PrintStream(BAOS);
-        System.setOut(redirectOut);
+        System.setOut(new PrintStream(BAOS));
     }
 
     @Test
-    void nullArguments() {
+    void nullArgument() {
         Application.main(null);
         assertEquals("F:0,H:0,D:0,T:0,X:0", BAOS.toString().replaceAll("([\\r\\n])", ""));
     }
 
     @Test
-    void noArguments() {
+    void noArgument() {
         Application.main(new String[]{});
+        assertEquals("F:0,H:0,D:0,T:0,X:0", BAOS.toString().replaceAll("([\\r\\n])", ""));
+    }
+
+    @Test
+    void emptyArguments() {
+        Application.main(new String[]{"", ""});
         assertEquals("F:0,H:0,D:0,T:0,X:0", BAOS.toString().replaceAll("([\\r\\n])", ""));
     }
 
     @Test
     void noneSense() {
         Application.main(new String[]{"foo", "bar"});
-        assertEquals("F:0,H:0,D:0,T:0,X:0", BAOS.toString().replaceAll("([\\r\\n])", ""));
-    }
-
-    @Test
-    void noPatientsNoDrugs() {
-        Application.main(new String[]{"", ""});
         assertEquals("F:0,H:0,D:0,T:0,X:0", BAOS.toString().replaceAll("([\\r\\n])", ""));
     }
 

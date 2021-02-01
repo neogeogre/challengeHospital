@@ -11,9 +11,16 @@ import java.util.Collections;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 class PatientTests {
+
+    @Test
+    void nullPatient() {
+        Patient patient = new Patient(null);
+        assertThrows(NullPointerException.class, () -> patient.treat(null));
+    }
 
     @Test
     void medicineNoEffect() {
@@ -70,6 +77,13 @@ class PatientTests {
     }
 
     @Test
+    void diabetesSurvivesWithInsulin() {
+        Patient patient = new Patient(State.DIABETES);
+        patient.treat(Collections.singletonList(Drug.INSULIN));
+        assertEquals(State.DIABETES, patient.getState());
+    }
+
+    @Test
     void mixInsulinWithAntibiotic() {
         Patient patient = new Patient(State.HEALTHY);
         patient.treat(Arrays.asList(Drug.INSULIN, Drug.ANTIBIOTIC));
@@ -78,9 +92,9 @@ class PatientTests {
 
     @Test
     void mixParacetamolWithAspirin() {
-        Patient patient2 = new Patient(State.HEALTHY);
-        patient2.treat(Arrays.asList(Drug.PARACETAMOL, Drug.ASPIRIN));
-        assertEquals(State.DEAD, patient2.getState());
+        Patient patient = new Patient(State.HEALTHY);
+        patient.treat(Arrays.asList(Drug.PARACETAMOL, Drug.ASPIRIN));
+        assertEquals(State.DEAD, patient.getState());
     }
 
     @Test

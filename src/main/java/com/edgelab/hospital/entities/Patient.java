@@ -25,8 +25,9 @@ public class Patient {
     public static Random RANDOM = new Random();
 
     private final BiFunction<List<Drug>, State, State> deathEffect = (drugs, state) -> {
-        if (drugs.contains(Drug.PARACETAMOL) && drugs.contains(Drug.ASPIRIN)) return State.DEAD;
-        if (!drugs.contains(Drug.INSULIN) && state.equals(State.DIABETES)) return State.DEAD;
+        if ((drugs.contains(Drug.PARACETAMOL) && drugs.contains(Drug.ASPIRIN)) ||
+                (!drugs.contains(Drug.INSULIN) && state.equals(State.DIABETES))
+        ) return State.DEAD;
         return state;
     };
 
@@ -37,14 +38,11 @@ public class Patient {
     };
 
     private final BiFunction<List<Drug>, State, State> cureEffect = (drugs, state) -> {
-        if (drugs.contains(Drug.ASPIRIN) && state.equals(State.FEVER)) return State.HEALTHY;
-        if (drugs.contains(Drug.PARACETAMOL) && state.equals(State.FEVER)) return State.HEALTHY;
-        if (drugs.contains(Drug.ANTIBIOTIC) && state.equals(State.TUBERCULOSIS)) return State.HEALTHY;
-        if (state.equals(State.DEAD)) {
-            if (RANDOM.nextDouble() <= 0.000001) {
-                return State.HEALTHY;
-            }
-        }
+        if ((drugs.contains(Drug.ASPIRIN) && state.equals(State.FEVER)) ||
+                (drugs.contains(Drug.PARACETAMOL) && state.equals(State.FEVER)) ||
+                (drugs.contains(Drug.ANTIBIOTIC) && state.equals(State.TUBERCULOSIS)) ||
+                ((state.equals(State.DEAD)) && (RANDOM.nextDouble() <= 0.000001))
+        ) return State.HEALTHY;
         return state;
     };
 

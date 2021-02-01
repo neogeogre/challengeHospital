@@ -11,9 +11,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 public class HospitalTests {
+
+    @Test
+    void nullHospital() {
+        Hospital hospital = new Hospital(null);
+        assertThrows(NullPointerException.class, () -> hospital.runSimulation(null));
+    }
 
     @Test
     void checkHospitalReportGeneration() {
