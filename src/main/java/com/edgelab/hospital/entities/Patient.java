@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
+import java.util.stream.Stream;
 
 /**
  * A patient of the {@link com.edgelab.hospital.entities.Hospital}
@@ -56,8 +57,8 @@ public class Patient {
      * @param drugs a list of {@link com.edgelab.hospital.entities.Drug}
      */
     public void treat(List<Drug> drugs) {
-        List.of(this.deathEffect, this.sideEffect, this.cureEffect) // the order is important here
-                .stream()
+        // the order is important here
+        Stream.of(this.deathEffect, this.sideEffect, this.cureEffect)
                 .filter(effect -> !this.isTreated.get())
                 .map(effect -> effect.apply(drugs, this.state))
                 .filter(newState -> !newState.equals(this.state))

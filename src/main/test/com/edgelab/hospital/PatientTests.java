@@ -3,6 +3,7 @@ package com.edgelab.hospital;
 import com.edgelab.hospital.entities.Drug;
 import com.edgelab.hospital.entities.Patient;
 import com.edgelab.hospital.entities.State;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
